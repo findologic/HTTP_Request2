@@ -196,9 +196,9 @@ abstract class HTTP_Request2_Adapter_CommonNetworkTest extends TestCase
                                   ));
 
         $response = $this->request->send();
-        $this->assertContains("foo picture.gif image/gif 43", $response->getBody());
-        $this->assertContains("bar[0] empty.gif image/gif 43", $response->getBody());
-        $this->assertContains("bar[1] secret.txt text/x-whatever 15", $response->getBody());
+        $this->assertStringContainsString("foo picture.gif image/gif 43", $response->getBody());
+        $this->assertStringContainsString("bar[0] empty.gif image/gif 43", $response->getBody());
+        $this->assertStringContainsString("bar[1] secret.txt text/x-whatever 15", $response->getBody());
     }
 
     public function testRawPostData()
@@ -299,8 +299,8 @@ abstract class HTTP_Request2_Adapter_CommonNetworkTest extends TestCase
                       ->attach($observer);
 
         $response = $this->request->send();
-        $this->assertContains('Method=GET', $response->getBody());
-        $this->assertNotContains('foo', $response->getBody());
+        $this->assertStringContainsString('Method=GET', $response->getBody());
+        $this->assertStringNotContainsString('foo', $response->getBody());
         $this->assertEquals($this->baseUrl . 'redirects.php?redirects=0', $response->getEffectiveUrl());
         $this->assertEquals(
             array('sentHeaders', 'sentBodyPart', 'sentBody', 'receivedHeaders', 'sentHeaders', 'receivedHeaders'),
@@ -318,8 +318,8 @@ abstract class HTTP_Request2_Adapter_CommonNetworkTest extends TestCase
                       ->attach($observer);
 
         $response = $this->request->send();
-        $this->assertContains('Method=POST', $response->getBody());
-        $this->assertContains('foo', $response->getBody());
+        $this->assertStringContainsString('Method=POST', $response->getBody());
+        $this->assertStringContainsString('foo', $response->getBody());
         $this->assertEquals(
             array('sentHeaders', 'sentBodyPart', 'sentBody', 'receivedHeaders',
                   'sentHeaders', 'sentBodyPart', 'sentBody', 'receivedHeaders'),
@@ -346,7 +346,7 @@ abstract class HTTP_Request2_Adapter_CommonNetworkTest extends TestCase
                       ->setConfig(array('follow_redirects' => true));
 
         $response = $this->request->send();
-        $this->assertContains('did relative', $response->getBody());
+        $this->assertStringContainsString('did relative', $response->getBody());
     }
 
     public function testRedirectsNonHTTP()
@@ -438,8 +438,8 @@ abstract class HTTP_Request2_Adapter_CommonNetworkTest extends TestCase
                       ->attach($observer);
 
         $response = $this->request->send();
-        $this->assertNotContains('Expect:', $observer->headers);
-        $this->assertContains('upload bug_15305 application/octet-stream 16338', $response->getBody());
+        $this->assertStringNotContainsString('Expect:', $observer->headers);
+        $this->assertStringContainsString('upload bug_15305 application/octet-stream 16338', $response->getBody());
     }
 
     public function testDownloadObserverWithPlainBody()

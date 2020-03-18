@@ -153,7 +153,7 @@ class HTTP_Request2_Adapter_SocketTest extends HTTP_Request2_Adapter_CommonNetwo
                       ->setBody($body);
 
         $response = $this->request->send();
-        $this->assertContains('upload bug_15305 application/octet-stream 16338', $response->getBody());
+        $this->assertStringContainsString('upload bug_15305 application/octet-stream 16338', $response->getBody());
     }
 
     /**
