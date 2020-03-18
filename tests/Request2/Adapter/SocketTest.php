@@ -37,6 +37,9 @@ class HTTP_Request2_Adapter_SocketTest extends HTTP_Request2_Adapter_CommonNetwo
         'adapter' => 'HTTP_Request2_Adapter_Socket'
     );
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testBug17826()
     {
         $adapter = new HTTP_Request2_Adapter_Socket();
@@ -185,6 +188,7 @@ class HTTP_Request2_Adapter_SocketTest extends HTTP_Request2_Adapter_CommonNetwo
             $this->fail('Cannot decode JSON from howsmyssl.com response');
         }
 
+        var_dump($responseData['insecure_cipher_suites']);
         $this->assertEmpty($responseData['insecure_cipher_suites']);
 
         if (version_compare(phpversion(), '5.6', '>=')) {
