@@ -12,7 +12,7 @@ before_script:
   - mkdir -p $TRAVIS_BUILD_DIR/logs
   # As described @ http://docs.travis-ci.com/user/languages/php/#Apache-%2B-PHP
   - sudo apt-get update
-  - sudo apt-get install apache2 libapache2-mod-php7
+  - sudo apt-get install apache2 libapache2-mod-php
   #- sudo apt-get install apache2 libapache2-mod-fastcgi
   # enable php-fpm
   #- sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf
