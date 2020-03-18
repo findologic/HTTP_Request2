@@ -174,6 +174,10 @@ class HTTP_Request2_Adapter_SocketTest extends HTTP_Request2_Adapter_CommonNetwo
 
     public function testHowsMySSL()
     {
+        if (!in_array('ssl', stream_get_transports())) {
+            $this->markTestSkipped("This test requires SSL support");
+        }
+
         $this->request->setUrl('https://www.howsmyssl.com/a/check')
             ->setConfig('ssl_verify_peer', false);
 
@@ -181,7 +185,7 @@ class HTTP_Request2_Adapter_SocketTest extends HTTP_Request2_Adapter_CommonNetwo
             $this->fail('Cannot decode JSON from howsmyssl.com response');
         }
 
-        $this->assertNull($responseData['insecure_cipher_suites']);
+        $this->assertEmpty($responseData['insecure_cipher_suites']);
 
         if (version_compare(phpversion(), '5.6', '>=')) {
             $this->assertEquals('Probably Okay', $responseData['rating']);
