@@ -1,10 +1,7 @@
 language: php
 php:
-  - 5.3
-  - 5.4
-  - 5.5
-  - 5.6
-  - 7.0
+  - 7.3
+  - 7.4
 install: pear install Net_URL2
 addons:
   hosts:
@@ -28,7 +25,7 @@ before_script:
   - sudo service apache2 restart
   # use travis config for network-backed tests
   - cp tests/NetworkConfig.php.travis tests/NetworkConfig.php
-script: phpunit tests
+script: composer test
 after_failure:
   - cat $TRAVIS_BUILD_DIR/logs/hr2-error.log
   - cat $TRAVIS_BUILD_DIR/logs/hr2-access.log

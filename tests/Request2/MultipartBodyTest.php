@@ -18,6 +18,8 @@
  * @link      http://pear.php.net/package/HTTP_Request2
  */
 
+use PHPUnit\Framework\TestCase;
+
 /** Sets up includes */
 require_once dirname(dirname(__FILE__)) . '/TestHelper.php';
 
@@ -29,7 +31,7 @@ require_once 'HTTP/Request2.php';
 /**
  * Unit test for HTTP_Request2_MultipartBody class
  */
-class HTTP_Request2_MultipartBodyTest extends PHPUnit_Framework_TestCase
+class HTTP_Request2_MultipartBodyTest extends TestCase
 {
     public function testUploadSimple()
     {
@@ -42,25 +44,23 @@ class HTTP_Request2_MultipartBodyTest extends PHPUnit_Framework_TestCase
         $asString = $body->__toString();
         $boundary = $body->getBoundary();
         $this->assertEquals($body->getLength(), strlen($asString));
-        $this->assertContains('This is a test.', $asString);
-        $this->assertContains('I am a parameter', $asString);
+        $this->assertStringContainsString('This is a test.', $asString);
+        $this->assertStringContainsString('I am a parameter', $asString);
         $this->assertRegexp("!--{$boundary}--\r\n$!", $asString);
     }
 
-   /**
-    *
-    * @expectedException HTTP_Request2_LogicException
-    */
     public function testRequest16863()
     {
+        $this->expectException(HTTP_Request2_LogicException::class);
+
         $req  = new HTTP_Request2(null, HTTP_Request2::METHOD_POST);
         $fp   = fopen(dirname(dirname(__FILE__)) . '/_files/plaintext.txt', 'rb');
         $body = $req->addUpload('upload', $fp)
                     ->getBody();
 
         $asString = $body->__toString();
-        $this->assertContains('name="upload"; filename="anonymous.blob"', $asString);
-        $this->assertContains('This is a test.', $asString);
+        $this->assertStringContainsString('name="upload"; filename="anonymous.blob"', $asString);
+        $this->assertStringContainsString('This is a test.', $asString);
 
         $req->addUpload('bad_upload', fopen('php://input', 'rb'));
     }
@@ -76,8 +76,8 @@ class HTTP_Request2_MultipartBodyTest extends PHPUnit_Framework_TestCase
             $asString .= $part;
         }
         $this->assertEquals($body->getLength(), strlen($asString));
-        $this->assertContains('This is a test.', $asString);
-        $this->assertContains('I am a parameter', $asString);
+        $this->assertStringContainsString('This is a test.', $asString);
+        $this->assertStringContainsString('I am a parameter', $asString);
     }
 
     public function testUploadArray()
@@ -89,14 +89,14 @@ class HTTP_Request2_MultipartBodyTest extends PHPUnit_Framework_TestCase
                                 ))
                     ->getBody();
         $asString = $body->__toString();
-        $this->assertContains(file_get_contents(dirname(dirname(__FILE__)) . '/_files/empty.gif'), $asString);
-        $this->assertContains('name="upload[0]"; filename="bio.txt"', $asString);
-        $this->assertContains('name="upload[1]"; filename="photo.gif"', $asString);
+        $this->assertStringContainsString(file_get_contents(dirname(dirname(__FILE__)) . '/_files/empty.gif'), $asString);
+        $this->assertStringContainsString('name="upload[0]"; filename="bio.txt"', $asString);
+        $this->assertStringContainsString('name="upload[1]"; filename="photo.gif"', $asString);
 
         $body2 = $req->setConfig(array('use_brackets' => false))->getBody();
         $asString = $body2->__toString();
-        $this->assertContains('name="upload"; filename="bio.txt"', $asString);
-        $this->assertContains('name="upload"; filename="photo.gif"', $asString);
+        $this->assertStringContainsString('name="upload"; filename="bio.txt"', $asString);
+        $this->assertStringContainsString('name="upload"; filename="photo.gif"', $asString);
     }
 }
 ?>

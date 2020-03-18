@@ -18,6 +18,8 @@
  * @link      http://pear.php.net/package/HTTP_Request2
  */
 
+use PHPUnit\Framework\TestCase;
+
 /** Sets up includes */
 require_once dirname(dirname(dirname(__FILE__))) . '/TestHelper.php';
 
@@ -99,7 +101,7 @@ class EventSequenceObserver implements SplObserver
  *
  * You need to properly set up this test suite, refer to NetworkConfig.php.dist
  */
-abstract class HTTP_Request2_Adapter_CommonNetworkTest extends PHPUnit_Framework_TestCase
+abstract class HTTP_Request2_Adapter_CommonNetworkTest extends TestCase
 {
    /**
     * HTTP Request object
@@ -119,7 +121,7 @@ abstract class HTTP_Request2_Adapter_CommonNetworkTest extends PHPUnit_Framework
     */
     protected $config = array();
 
-    protected function setUp()
+    protected function setUp(): void
     {
         if (!defined('HTTP_REQUEST2_TESTS_BASE_URL') || !HTTP_REQUEST2_TESTS_BASE_URL) {
             $this->markTestSkipped('Base URL is not configured');

@@ -18,6 +18,8 @@
  * @link      http://pear.php.net/package/HTTP_Request2
  */
 
+use PHPUnit\Framework\TestCase;
+
 /** Sets up includes */
 require_once dirname(__FILE__) . '/TestHelper.php';
 
@@ -45,7 +47,7 @@ class HTTP_Request2_MockObserver implements SplObserver
 /**
  * Unit test for subject-observer pattern implementation in HTTP_Request2
  */
-class HTTP_Request2_ObserverTest extends PHPUnit_Framework_TestCase
+class HTTP_Request2_ObserverTest extends TestCase
 {
     public function testSetLastEvent()
     {

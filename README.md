@@ -1,7 +1,17 @@
-
 # HTTP_Request2
 
 [![Build Status](https://travis-ci.org/pear/HTTP_Request2.svg?branch=trunk)](https://travis-ci.org/pear/HTTP_Request2)
+
+---
+
+**DISCLAMER!** This project is no longer actively maintained and only updated if future
+PHP versions break compatibility.
+
+If for any reason you want to use this project, use [Guzzle](https://github.com/guzzle/guzzle) instead. It is much better,
+maintained, has many more features and is generally speaking the way to go if you want
+to send HTTP requests with PHP.
+
+---
 
 Provides an easy way to perform HTTP requests, uses pluggable adapters
 
