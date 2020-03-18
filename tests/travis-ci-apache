@@ -5,10 +5,9 @@
     DocumentRoot "%TRAVIS_BUILD_DIR%/tests/_network"
 
     <Directory "%TRAVIS_BUILD_DIR%/tests/_network">
-        Options FollowSymLinks MultiViews +ExecCGI
+        Options FollowSymLinks MultiViews ExecCGI
         AllowOverride All
-        Order deny,allow
-        Allow from all
+        Require all granted
     </Directory>
 
 
