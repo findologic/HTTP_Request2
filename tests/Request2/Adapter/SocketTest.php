@@ -88,7 +88,7 @@ class HTTP_Request2_Adapter_SocketTest extends HTTP_Request2_Adapter_CommonNetwo
         $response = $this->request->send();
         restore_error_handler();
 
-        $this->assertContains("upload foo.txt text/plain 20000", $response->getBody());
+        $this->assertStringContainsString("upload foo.txt text/plain 20000", $response->getBody());
     }
 
     public function rewindWarningsHandler($errno, $errstr)
@@ -181,7 +181,7 @@ class HTTP_Request2_Adapter_SocketTest extends HTTP_Request2_Adapter_CommonNetwo
             $this->fail('Cannot decode JSON from howsmyssl.com response');
         }
 
-        $this->assertEmpty($responseData['insecure_cipher_suites']);
+        $this->assertNull($responseData['insecure_cipher_suites']);
 
         if (version_compare(phpversion(), '5.6', '>=')) {
             $this->assertEquals('Probably Okay', $responseData['rating']);

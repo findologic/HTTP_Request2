@@ -476,12 +476,11 @@ abstract class HTTP_Request2_Adapter_CommonNetworkTest extends TestCase
         $this->assertEquals(str_repeat('0123456789abcdef', 256), fread($fp, 8192));
     }
 
-    /**
-     * @expectedException HTTP_Request2_MessageException
-     * @expectedExceptionMessage Body length limit
-     */
     public function testDownloadObserverEnforcesSizeLimit()
     {
+        $this->expectException(HTTP_Request2_MessageException::class);
+        $this->expectExceptionMessage('Body length limit');
+
         $fp       = fopen('php://memory', 'r+');
         $observer = new HTTP_Request2_Observer_UncompressingDownload($fp, 1000);
 
