@@ -494,6 +494,7 @@ abstract class HTTP_Request2_Adapter_CommonNetworkTest extends TestCase
     public function testIncompleteBody()
     {
         if (version_compare(phpversion(), '7.4', '>=')) {
+            $this->markTestSkipped('Skipped due to curl warning.');
         }
 
         $events = array('receivedBodyPart', 'warning', 'receivedBody');
