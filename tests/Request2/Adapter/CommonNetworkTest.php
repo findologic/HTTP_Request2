@@ -493,6 +493,11 @@ abstract class HTTP_Request2_Adapter_CommonNetworkTest extends TestCase
 
     public function testIncompleteBody()
     {
+        if (version_compare(phpversion(), '7.4', '>=')) {
+            $this->expectException(HTTP_Request2_Adapter_CurlTest::class);
+            $this->expectExceptionMessage('Curl error: transfer closed with 28 bytes remaining to read');
+        }
+
         $events = array('receivedBodyPart', 'warning', 'receivedBody');
         $this->request->setHeader('Accept-Encoding', 'identity');
 
