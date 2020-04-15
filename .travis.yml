@@ -1,10 +1,7 @@
 language: php
 php:
-  - 5.3
-  - 5.4
-  - 5.5
-  - 5.6
-  - 7.0
+  - 7.3
+  - 7.4
 install: pear install Net_URL2
 addons:
   hosts:
@@ -15,7 +12,7 @@ before_script:
   - mkdir -p $TRAVIS_BUILD_DIR/logs
   # As described @ http://docs.travis-ci.com/user/languages/php/#Apache-%2B-PHP
   - sudo apt-get update
-  - sudo apt-get install apache2 libapache2-mod-php5
+  - sudo apt-get install apache2 libapache2-mod-php
   #- sudo apt-get install apache2 libapache2-mod-fastcgi
   # enable php-fpm
   #- sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf
@@ -23,12 +20,13 @@ before_script:
   #- echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   #- ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
   # configure apache virtual hosts
-  - sudo cp -f tests/travis-ci-apache /etc/apache2/sites-available/default
-  - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/default
+  - sudo sed -i -e "s,www-data,travis,g" /etc/apache2/envvars
+  - sudo cp -f tests/travis-ci-apache /etc/apache2/sites-available/000-default.conf
+  - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/000-default.conf
   - sudo service apache2 restart
   # use travis config for network-backed tests
   - cp tests/NetworkConfig.php.travis tests/NetworkConfig.php
-script: phpunit tests
+script: composer test
 after_failure:
   - cat $TRAVIS_BUILD_DIR/logs/hr2-error.log
   - cat $TRAVIS_BUILD_DIR/logs/hr2-access.log

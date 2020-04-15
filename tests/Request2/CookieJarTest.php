@@ -18,6 +18,8 @@
  * @link      http://pear.php.net/package/HTTP_Request2
  */
 
+use PHPUnit\Framework\TestCase;
+
 /** Sets up includes */
 require_once dirname(dirname(__FILE__)) . '/TestHelper.php';
 /** Stores cookies and passes them between HTTP requests */
@@ -28,7 +30,7 @@ require_once 'HTTP/Request2/Adapter/Mock.php';
 /**
  * Unit test for HTTP_Request2_CookieJar class
  */
-class HTTP_Request2_CookieJarTest extends PHPUnit_Framework_TestCase
+class HTTP_Request2_CookieJarTest extends TestCase
 {
    /**
     * Cookie jar instance being tested
@@ -36,7 +38,7 @@ class HTTP_Request2_CookieJarTest extends PHPUnit_Framework_TestCase
     */
     protected $jar;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->jar = new HTTP_Request2_CookieJar();
     }
@@ -45,10 +47,10 @@ class HTTP_Request2_CookieJarTest extends PHPUnit_Framework_TestCase
     * Test that we can't store junk "cookies" in jar
     *
     * @dataProvider invalidCookieProvider
-    * @expectedException HTTP_Request2_LogicException
     */
     public function testStoreInvalid($cookie)
     {
+        $this->expectException(HTTP_Request2_LogicException::class);
         $this->jar->store($cookie);
     }
 

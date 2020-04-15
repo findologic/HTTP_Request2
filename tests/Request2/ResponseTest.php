@@ -18,6 +18,8 @@
  * @link      http://pear.php.net/package/HTTP_Request2
  */
 
+use PHPUnit\Framework\TestCase;
+
 /** Sets up includes */
 require_once dirname(dirname(__FILE__)) . '/TestHelper.php';
 
@@ -29,14 +31,12 @@ require_once 'HTTP/Request2/Response.php';
 /**
  * Unit test for HTTP_Request2_Response class
  */
-class HTTP_Request2_ResponseTest extends PHPUnit_Framework_TestCase
+class HTTP_Request2_ResponseTest extends TestCase
 {
-   /**
-    *
-    * @expectedException HTTP_Request2_MessageException
-    */
     public function testParseStatusLine()
     {
+        $this->expectException(HTTP_Request2_MessageException::class);
+
         $response = new HTTP_Request2_Response('HTTP/1.1 200 OK');
         $this->assertEquals('1.1', $response->getVersion());
         $this->assertEquals(200, $response->getStatus());
@@ -79,12 +79,9 @@ class HTTP_Request2_ResponseTest extends PHPUnit_Framework_TestCase
         }
     }
 
-   /**
-    *
-    * @expectedException HTTP_Request2_MessageException
-    */
     public function testGzipEncoding()
     {
+        $this->expectException(HTTP_Request2_MessageException::class);
         $response = $this->readResponseFromFile('response_gzip');
         $this->assertEquals('0e964e9273c606c46afbd311b5ad4d77', md5($response->getBody()));
 

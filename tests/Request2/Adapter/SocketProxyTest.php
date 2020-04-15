@@ -34,7 +34,7 @@ class HTTP_Request2_Adapter_SocketProxyTest extends HTTP_Request2_Adapter_Common
         'adapter' => 'HTTP_Request2_Adapter_Socket'
     );
 
-    protected function setUp()
+    protected function setUp(): void
     {
         if (!defined('HTTP_REQUEST2_TESTS_PROXY_HOST') || !HTTP_REQUEST2_TESTS_PROXY_HOST) {
             $this->markTestSkipped('Proxy is not configured');

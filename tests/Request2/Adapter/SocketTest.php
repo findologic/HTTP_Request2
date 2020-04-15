@@ -37,6 +37,9 @@ class HTTP_Request2_Adapter_SocketTest extends HTTP_Request2_Adapter_CommonNetwo
         'adapter' => 'HTTP_Request2_Adapter_Socket'
     );
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testBug17826()
     {
         $adapter = new HTTP_Request2_Adapter_Socket();
@@ -88,7 +91,7 @@ class HTTP_Request2_Adapter_SocketTest extends HTTP_Request2_Adapter_CommonNetwo
         $response = $this->request->send();
         restore_error_handler();
 
-        $this->assertContains("upload foo.txt text/plain 20000", $response->getBody());
+        $this->assertStringContainsString("upload foo.txt text/plain 20000", $response->getBody());
     }
 
     public function rewindWarningsHandler($errno, $errstr)
@@ -153,7 +156,7 @@ class HTTP_Request2_Adapter_SocketTest extends HTTP_Request2_Adapter_CommonNetwo
                       ->setBody($body);
 
         $response = $this->request->send();
-        $this->assertContains('upload bug_15305 application/octet-stream 16338', $response->getBody());
+        $this->assertStringContainsString('upload bug_15305 application/octet-stream 16338', $response->getBody());
     }
 
     /**
@@ -174,6 +177,10 @@ class HTTP_Request2_Adapter_SocketTest extends HTTP_Request2_Adapter_CommonNetwo
 
     public function testHowsMySSL()
     {
+        if (!in_array('ssl', stream_get_transports())) {
+            $this->markTestSkipped("This test requires SSL support");
+        }
+
         $this->request->setUrl('https://www.howsmyssl.com/a/check')
             ->setConfig('ssl_verify_peer', false);
 

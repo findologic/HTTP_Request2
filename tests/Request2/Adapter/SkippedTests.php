@@ -18,13 +18,15 @@
  * @link      http://pear.php.net/package/HTTP_Request2
  */
 
+use PHPUnit\Framework\TestCase;
+
 /** Sets up includes */
 require_once dirname(dirname(dirname(__FILE__))) . '/TestHelper.php';
 
 /**
  * Shows a skipped test if networked tests are not configured
  */
-class HTTP_Request2_Adapter_Skip_SocketTest extends PHPUnit_Framework_TestCase
+class HTTP_Request2_Adapter_Skip_SocketTest extends TestCase
 {
     public function testSocketAdapter()
     {
@@ -35,7 +37,7 @@ class HTTP_Request2_Adapter_Skip_SocketTest extends PHPUnit_Framework_TestCase
 /**
  * Shows a skipped test if proxy is not configured
  */
-class HTTP_Request2_Adapter_Skip_SocketProxyTest extends PHPUnit_Framework_TestCase
+class HTTP_Request2_Adapter_Skip_SocketProxyTest extends TestCase
 {
     public function testSocketAdapterWithProxy()
     {
@@ -46,7 +48,7 @@ class HTTP_Request2_Adapter_Skip_SocketProxyTest extends PHPUnit_Framework_TestC
 /**
  * Shows a skipped test if networked tests are not configured or cURL extension is unavailable
  */
-class HTTP_Request2_Adapter_Skip_CurlTest extends PHPUnit_Framework_TestCase
+class HTTP_Request2_Adapter_Skip_CurlTest extends TestCase
 {
     public function testCurlAdapter()
     {
